@@ -1,16 +1,16 @@
 'use strict';
 
-const CACHE_NAME = 'longtext-qr-pwa-v1-2-0';
+const CACHE_NAME = 'longtext-qr-pwa-v1-2-1';
 const APP_SHELL = [
   './',
   './index.html',
   './style.css',
   './app.js',
-  './vendor/qrcode_local.js',
+  './qrcode_local.js',
   './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/icon-512-maskable.png'
+  './icon-192.png',
+  './icon-512.png',
+  './icon-512-maskable.png'
 ];
 
 self.addEventListener('install', event => {
