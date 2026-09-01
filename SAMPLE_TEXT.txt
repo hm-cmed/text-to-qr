@@ -1,0 +1,7 @@
+これは日本語とEnglishが混在する動作確認用のサンプル文章です。
+This is a sample text for testing the offline QR split-and-restore workflow.
+
+腹痛は昨日から出現し、The patient reported intermittent abdominal pain since yesterday.
+日本語、English、数字123456、記号 ! ? / : ; ( ) を含めてもUTF-8として処理されます。
+
+この文章を index.html の「QR作成」へ貼り付けてQRを生成してください。

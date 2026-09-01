@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1f2937">
+<meta name="description" content="日本語・英語混合長文を複数QRへ分割し、USB QRリーダーで順不同に復元するブラウザ内完結型ツール。">
+<title>長文QR 分割・復元ツール</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body><div class="wrap">
+<header class="hero">
+  <div class="hero-row">
+    <div>
+      <h1>長文QR 分割・復元ツール</h1>
+      <p>日本語・English混合長文を複数QRへ分割し、USB QRリーダーで順不同に復元します。</p>
+    </div>
+    <button id="installBtn" class="secondary install-btn" hidden>アプリとしてインストール</button>
+  </div>
+  <div class="badges">
+    <span class="badge">ブラウザ内処理</span>
+    <span class="badge">入力データ外部送信なし</span>
+    <span class="badge">初回読込後オフライン利用可</span>
+    <span id="networkBadge" class="badge">接続状態を確認中</span>
+  </div>
+  <div id="pwaStatus" class="pwa-status">オフライン利用の準備を確認しています…</div>
+</header>
+
+<div class="tabs"><button class="tab active" data-tab="create">QR作成</button><button class="tab" data-tab="restore">QR復元</button></div>
+<section class="panel" id="panel-create">
+<label for="sourceText">QR化する長文</label><textarea id="sourceText" placeholder="ここに日本語・英語混合の長文を貼り付けます。"></textarea>
+<div class="controls"><div><label for="chunkBytes">1QRあたり本文 bytes</label><input id="chunkBytes" type="number" min="100" max="1000" value="600"></div><div><label for="ecc">誤り訂正</label><select id="ecc"><option>L</option><option selected>M</option><option>Q</option><option>H</option></select></div><button id="generateBtn">QRコードを作成</button></div>
+<div class="note">推奨: 600 bytes / M。OQ2形式では本文をUTF-8で分割後、英大文字と数字だけのBase32へ変換して格納します。US/JISキーボード配列が異なるUSB HIDスキャナでも記号変換の影響を受けにくい設計です。</div>
+<div id="genSummary" class="summary">まだ生成されていません。</div><div class="actions"><button id="printBtn" disabled>全QRを印刷</button><span id="saveAllHint" class="hiddenhint" hidden>各カードの「PNG保存」から個別保存できます。</span></div>
+<div id="qrGrid" class="qr-grid"></div>
+</section>
+
+<section class="panel" id="panel-restore" hidden>
+<div class="restore-grid"><div><label for="scanInput">USB QRリーダー入力</label><input id="scanInput" class="scanbox" autocomplete="off" placeholder="ここを選択したままQRをスキャン（末尾Enter推奨）"><p class="note">スキャナはUSB HID Keyboardモード、サフィックスEnter推奨です。OQ2は英数字のみなのでUS/JISキーボード配列差の影響を受けにくく、QRは順不同・重複スキャンでも構いません。</p><div id="scanMessage" class="message"></div><div id="restoreStatus" class="summary"></div><div id="missing" class="warn">未取得: —</div><div id="partsList" class="parts"></div><div class="actions"><button id="restoreBtn" disabled>全文を復元</button><button id="resetRestore" class="secondary">復元をリセット</button></div></div>
+<div><label for="restoredText">復元された全文</label><textarea id="restoredText" readonly placeholder="すべてのQRが揃うとここに全文を復元できます。"></textarea><div class="actions"><button id="downloadTxt" disabled>TXT保存</button></div></div></div>
+</section>
+
+<section class="privacy-box">
+  <strong>プライバシー:</strong> QR化する文章・読み取ったQR・復元文はこのブラウザ内だけで処理します。本アプリからサーバーへ送信する処理、アクセス解析、広告、外部CDNは組み込んでいません。QRコード自体は暗号化ではないため、機密情報は運用規程に従って扱ってください。
+</section>
+<footer>Long Text QR Tool v1.2 (OQ2 / PWA)</footer>
+</div>
+<script src="vendor/qrcode_local.js"></script>
+<script src="app.js"></script>
+</body></html>
